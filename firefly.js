@@ -255,15 +255,25 @@ function onCanvasPointer(e){
 
 function showNote(){
   stopAnim();
+
+  // disable canvas clicks so they don't pass-through popup
+  if (canvas) canvas.style.pointerEvents = "none";
+
   const dynamic = document.getElementById('noteMsg');
   if(dynamic) dynamic.textContent = messages[Math.floor(Math.random() * messages.length)];
+
   const popup = document.getElementById('notePopup');
   if(popup) {
     popup.style.display = 'flex';
     const box = popup.querySelector('.noteContent');
-    if(box) { box.classList.remove('pop'); void box.offsetWidth; box.classList.add('pop'); }
+    if(box) { 
+      box.classList.remove('pop'); 
+      void box.offsetWidth; 
+      box.classList.add('pop'); 
+    }
   }
-  // also allow clicking backdrop to close
+
+  // allow backdrop click to close
   const popupEl = document.getElementById('notePopup');
   if(popupEl && !popupEl._backdropListener) {
     popupEl._backdropListener = (ev) => {
@@ -273,16 +283,30 @@ function showNote(){
   }
 }
 
+
 function closeNote(){
   const popup = document.getElementById('notePopup');
   if(popup) {
     popup.style.display = 'none';
-    // remove backdrop listener (cleanup)
+
+    // re-enable canvas click events
+    if (canvas) canvas.style.pointerEvents = "auto";
+
+    // remove backdrop listener
     if(popup._backdropListener) {
       popup.removeEventListener('click', popup._backdropListener);
       popup._backdropListener = null;
     }
   }
+
+  // reset target & animation
+  fireflies.forEach(f => f.isTarget = false);
+  targetIndex = Math.floor(Math.random() * fireflies.length);
+  if(fireflies[targetIndex]) fireflies[targetIndex].isTarget = true;
+
+  if(!animId) animId = requestAnimationFrame(loop);
+}
+
   // reassign target randomly & ensure animation restarts
   fireflies.forEach(f => f.isTarget = false);
   targetIndex = Math.floor(Math.random() * fireflies.length);
@@ -305,3 +329,4 @@ document.addEventListener('DOMContentLoaded', ()=> {
     });
   });
 });
+
