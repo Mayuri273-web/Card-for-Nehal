@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firefly Hunt ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="gameBody">
+
+  <button id="homeBtn" onclick="location.href='index.html'">🏠 Home</button>
+
+  <canvas id="gameCanvas"></canvas>
+  <p id="gameHint">One of the firefly has a message for you please click on it   ✨</p>
+
+  <!-- POPUP NOTE (hidden initially) -->
+  <div id="notePopup">
+    <div class="noteContent">
+      <h2>Happy Men’s Day, babii 🤍</h2>
+      <p id="noteMsg"></p>
+
+      <div class="noteButtons">
+        <button id="backToGame">Back to Game</button>
+        <button id="homeFromNote" onclick="location.href='index.html'">Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="firefly.js"></script>
+</body>
+</html>
